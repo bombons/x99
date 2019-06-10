@@ -54,6 +54,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# customs
+# --> customs
 tools
 downloads
+LiluFriend.kext
