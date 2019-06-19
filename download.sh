@@ -21,6 +21,7 @@ download_acidanthera AppleALC acidanthera-AppleALC
 download_acidanthera WhateverGreen acidanthera-WhateverGreen
 download_bombons TSCAdjustReset TSCAdjustReset interferenc-TSCAdjustReset
 download_bitbucket_bombons agpminjector AGPMInjector
+# download_bitbucket_bombons agpminjector AGPMEnabler
 download_bitbucket_bombons unsolid UnSolid
 cd ..
 
