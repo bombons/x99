@@ -24,6 +24,7 @@ By default FakeSMC sensors are not installed, if you want it run:
 ```
 
 If you want only install tools:
+
 ```bash
 ./install_tools.sh
 ```
