@@ -18,12 +18,12 @@ source "$(dirname ${BASH_SOURCE[0]})"/tools/libinstaller.sh
 warn_about_superuser
 
 
-# # start clean
-# mkdir -p $TMP_DIR && rm -Rf $TMP_DIR/*
+# start clean
+mkdir -p $TMP_DIR && rm -Rf $TMP_DIR/*
 cd $TMP_DIR || exit 1
 
-# # download sucatalog
-# download $DEFAULT_SUCATALOGS
+# download sucatalog
+download $DEFAULT_SUCATALOGS
 
 # convert to plain text if necessary
 plutil_convert "$(basename $DEFAULT_SUCATALOGS)"
@@ -35,18 +35,18 @@ plutil_extract Products "$(basename $DEFAULT_SUCATALOGS)" products.plist
 # extract product ids
 products=( $( defaults read $TMP_DIR/products.plist | cut -d= -f1 | grep -e "-" | tr -d '"' | sort -n ) )
 
-# # find valids ids
-# mkdir -p valids && rm -Rf valids/*
-# for id in "${products[@]}"
-# do
-#     if [[ $(plutil_get_value $id.ExtendedMetaInfo.InstallAssistantPackageIdentifiers.OSInstall products.plist) != "__property_not_found__" ]]
-#     then
-#         plutil_extract $id products.plist valids/$id.plist
-#     fi
-# done
+# find valids ids
+mkdir -p valids && rm -Rf valids/*
+for id in "${products[@]}"
+do
+    if [[ $(plutil_get_value $id.ExtendedMetaInfo.InstallAssistantPackageIdentifiers.OSInstall products.plist) != "__property_not_found__" ]]
+    then
+        plutil_extract $id products.plist valids/$id.plist
+    fi
+done
 
 # get build info
-# mkdir -p downloads && rm -Rf downloads/*
+mkdir -p downloads && rm -Rf downloads/*
 cd downloads || exit 1
 for z in ../valids/*.plist
 do
@@ -145,14 +145,14 @@ done
 # download build
 cd downloads/${_ids[$idx]} || exit 1
 
-# for l in "${urls[@]}"
-# do
-#     download "$l"
-# done
+for l in "${urls[@]}"
+do
+    download "$l"
+done
 
 cd ../.. || exit 1
 
-# # clean
+# clean
 rm -Rf *.sparseimage
 
 # generate a name for the sparseimage
