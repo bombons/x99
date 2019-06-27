@@ -5,8 +5,15 @@
 TMP_DIR=/tmp/com.bombons.support
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SEEDCATALOGS='/System/Library/PrivateFrameworks/Seeding.framework/Versions/A/Resources/SeedCatalogs.plist'
-DEFAULT_SUCATALOGS='https://swscan.apple.com/content/catalogs/others/index-10.13-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog'
+
+# High Sierra - Regular Software Updates
+# DEFAULT_SUCATALOGS='https://swscan.apple.com/content/catalogs/others/index-10.13-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog'
+# Mojave - Regular Software Updates
 # DEFAULT_SUCATALOGS='https://swscan.apple.com/content/catalogs/others/index-10.14-10.13-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog'
+# Catalina - Developer Program Members
+DEFAULT_SUCATALOGS='https://swscan.apple.com/content/catalogs/others/index-10.15seed-10.15-10.14-10.13-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog'
+# Catalina - Beta Program Members
+# DEFAULT_SUCATALOGS='https://swscan.apple.com/content/catalogs/others/index-10.15beta-10.15-10.14-10.13-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog'
 
 # get copy of tools
 "$(dirname ${BASH_SOURCE[0]})"/get_tools.sh
@@ -51,7 +58,7 @@ cd downloads || exit 1
 for z in ../valids/*.plist
 do
     id=$(basename "$z") && id="${id%.*}"
-    # mkdir -p $id && rm -Rf ${id:?}/*
+    mkdir -p $id && rm -Rf ${id:?}/*
 
     # get InstallAssistantAuto.smd file
     serverMetadataUrl="$(get_plist_property $z ":ServerMetadataURL")"
@@ -62,7 +69,6 @@ do
     cd $id || exit 1
     download $serverMetadataUrl
     download $distributions
-
 
     # get installer version
     version="$(get_plist_property InstallAssistantAuto.smd ":CFBundleShortVersionString")"
